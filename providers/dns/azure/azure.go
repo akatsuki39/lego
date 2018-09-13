@@ -107,6 +107,8 @@ func toRelativeRecord(domain, zone string) string {
 
 // CleanUp removes the TXT record matching the specified parameters
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
+	return nil
+	
 	fqdn, _, _ := acme.DNS01Record(domain, keyAuth)
 
 	zone, err := d.getHostedZoneID(fqdn)
