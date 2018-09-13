@@ -108,25 +108,6 @@ func toRelativeRecord(domain, zone string) string {
 // CleanUp removes the TXT record matching the specified parameters
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	return nil
-	
-	fqdn, _, _ := acme.DNS01Record(domain, keyAuth)
-
-	zone, err := d.getHostedZoneID(fqdn)
-	if err != nil {
-		return err
-	}
-
-	relative := toRelativeRecord(fqdn, acme.ToFqdn(zone))
-	rsc := dns.NewRecordSetsClient(d.subscriptionID)
-	spt, err := d.newServicePrincipalTokenFromCredentials(azure.PublicCloud.ResourceManagerEndpoint)
-	if err != nil {
-		return err
-	}
-
-	rsc.Authorizer = autorest.NewBearerAuthorizer(spt)
-
-	_, err = rsc.Delete(d.context, d.resourceGroup, zone, relative, dns.TXT, "")
-	return err
 }
 
 // Checks that azure has a zone for this domain name.
